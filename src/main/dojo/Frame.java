@@ -1,45 +1,35 @@
 package dojo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Frame {
     public static final int TOTAL_PINS = 10;
-    private Integer rollOne = null;
-    private Integer rollTwo = null;
-
-    public int getRollOne() {
-        return rollOne;
-    }
-
-    public void setRollOne(int rollOne) {
-        this.rollOne = rollOne;
-    }
-
-    public int getRollTwo() {
-        return rollTwo;
-    }
-
-    public void setRollTwo(int rollTwo) {
-        this.rollTwo = rollTwo;
-    }
+    public List<Integer> rolls = new ArrayList<Integer>();
 
     public void addRoll(int pins) {
-        if( rollOne == null) {
-            rollOne = pins;
+        if( rolls.isEmpty()) {
+            rolls.add(0, pins);
         } else {
-            rollTwo = pins;
+            rolls.add(1, pins);
         }
     }
 
     public boolean shouldClose() {
         if(isStrike()){
             return true;
-        } else if(rollOne == null || rollTwo == null){
+        } else if(rolls.isEmpty()){
             return false;
         }
 
         return true;
     }
 
-    private boolean isStrike() {
-        return rollOne == TOTAL_PINS;
+    public boolean isStrike() {
+        return rolls.get(0) == TOTAL_PINS;
+    }
+
+    public boolean isSpare(){
+        return rolls.size() == 2 && rolls.get(0) + rolls.get(1) == TOTAL_PINS;
     }
 }

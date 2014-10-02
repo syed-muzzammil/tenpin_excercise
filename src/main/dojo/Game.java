@@ -16,7 +16,6 @@ public class Game {
     public Game() {
         frames = new ArrayList<Frame>();
         currentFrame = new Frame();
-        frames.add(currentFrame);
     }
 
     public void roll(int pins) {
@@ -35,6 +34,7 @@ public class Game {
             totalScore+=5;
         }
         previousPins = pins;
+        frames.add(currentFrame);
     }
 
     private void setRollsInFrame(int pins) {
@@ -50,7 +50,7 @@ public class Game {
     private void setBonusRollsRemaining(int pins) {
         if (isStrike(pins)) {
             bonusRollsRemaining = 2;
-        } else if (isSpare(pins)) {
+        } else if (currentFrame.isSpare()) {
             bonusRollsRemaining = 1;
         }
     }
@@ -60,8 +60,7 @@ public class Game {
             --bonusRollsRemaining;
             totalScore += pins;
         }
-
-        totalScore += pins;
+            totalScore += pins;
     }
 
     private boolean isStrike(int pins) {
